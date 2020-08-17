@@ -1,12 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useHistory, useLocation} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Arrow from '../../assets/arrow.png'
+import Arrow from '../assets/arrow.png'
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import {ThemeProvider} from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import PropTypes from 'prop-types'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +36,7 @@ const theme = createMuiTheme({
     },
 });
 
-const Header = ({setInfoBool, isMobile}) => {
+const Header = () => {
     const classes = useStyles();
 
     const history = useHistory()
@@ -47,33 +46,21 @@ const Header = ({setInfoBool, isMobile}) => {
         history.go(-1)
     }
 
-    useEffect(()=>{
-        setInfoBool(false)
-    }, [location, setInfoBool])
-
     return(
         <ThemeProvider theme={theme}>
             <header>
-                {isMobile
-                    ? <Paper elevation={2}
-                             className={classes.root}
-                             onClick={goBackButton}
-                    >
-                        <img src={Arrow} alt="Volver"/>
-                        <Typography variant="h6">
-                            Ayuda
-                        </Typography>
-                    </Paper>
-                    : null}
-
-
+                <Paper elevation={2}
+                         className={classes.root}
+                         onClick={goBackButton}
+                >
+                    <img src={Arrow} alt="Volver"/>
+                    <Typography variant="h6">
+                        Ayuda
+                    </Typography>
+                </Paper>
             </header>
         </ThemeProvider>
     )
-}
-
-Header.propTypes = {
-    setInfoBool: PropTypes.func.isRequired
 }
 
 export default Header

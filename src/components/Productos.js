@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useLocation} from 'react-router-dom'
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import MainTitleBox from "../MainTitleBox/MainTitleBox";
-import PropTypes from "prop-types";
+import Producto from "./Producto";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,34 +12,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Productos = ({titlesData, subtitlesData, setInfoBool, country}) => {
+const Productos = () => {
     const classes = useStyles();
     const [info, setInfo] = useState([])
-
-    let location = useLocation()
-
-    useEffect(()=>{
-        const url = location.pathname;
-        if(url.indexOf('/') !== url.lastIndexOf('/')){
-            setInfoBool(true)
-        }
-        else if(url.indexOf('/') !== url.lastIndexOf(url.charAt(url.length-1)) && url.indexOf('/') === url.lastIndexOf('/')) {
-            setInfoBool(false)
-            setInfo(subtitlesData.filter(row => row.urltitlefather === url && row.country.includes(country)))
-
-        } else {
-            setInfoBool(false)
-            setInfo(titlesData)
-
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location, country, setInfoBool])
-
 
     const boxComponent = () => {
         const resultInfo = info ?
             info.map((infoRow) => (
-                <MainTitleBox
+                <Producto
                     key = {infoRow.id}
                     infoRow = {infoRow}
                 />
@@ -57,13 +35,5 @@ const Productos = ({titlesData, subtitlesData, setInfoBool, country}) => {
     );
 }
 
-Productos.propTypes = {
-    setInfoBool: PropTypes.func.isRequired,
-    setTitle: PropTypes.func,
-    country: PropTypes.string.isRequired,
-    titlesData: PropTypes.array.isRequired,
-    subtitlesData: PropTypes.array.isRequired,
-
-}
 
 export default Productos
